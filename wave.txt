@@ -1,0 +1,156 @@
+// wavetest.cpp : 定義主控台應用程式的進入點。
+
+
+#include "stdafx.h"
+#include "wave_file_s.h"
+#include <iostream>
+#include <math.h>
+#define note 5
+#define pi 3.14159265
+using namespace std;
+double fre;
+long Length = 44100; //44100為一秒
+double Volumn = 10000;	//聲音大小
+short *signal = new short[Length*note]; ;
+long L = 0; //總長度
+int v;
+
+
+
+
+double frequence(); //定義頻率
+double convert(int x); //調整泛音
+double volumn(int i,double v); //調整音量
+void start();
+
+
+int main() {
+	
+
+	for (int i = 0; i < note; i++) {
+		cout << "這是第" << i + 1 << "個音 (總共有" << note << "個音)\n";
+		start();
+		
+	}
+
+	wave_file A((char*)"test.wav", signal, L);
+	delete[] signal;
+
+	return 0;
+}
+
+double frequence() {
+	char x;
+	cout << "請輸入音高(D R M F S R T)或者0表示為休止符\n";
+	cin >> x;
+	switch (x) {
+	default:
+		frequence();
+		break;
+
+	case '0': //none
+		return 0;
+		break;
+
+	case 'd':
+	case 'D': //do
+		return 261.6;
+		break;
+
+	case 'r':
+	case 'R': //re
+		return 293.7;
+		break;
+
+	case 'm':
+	case 'M': //mi
+		return 329.6;
+		break;
+
+	case 'f':
+	case 'F': //fa
+		return 349.2;
+		break;
+
+	case 's':
+	case 'S': //so
+		return 392.0;
+		break;
+
+	case 'l':
+	case 'L': //la
+		return 440;
+		break;
+
+	case 't':
+	case 'T': //ti
+		return 493.9;
+		break;
+	}
+}
+double length() {
+	char x;
+	cout << "請輸入音長為幾分之一音符(為2的幾次)\n";
+	cin >> x;
+	switch (x) {
+	default:
+		frequence();
+		break;
+
+	case '0': //none
+		return 2;
+		break;
+
+	case '1': //do
+		return 1;
+		break;
+
+	case '2':
+		return 0.5;
+		break;
+
+	case '3':
+		return 0.25;
+		break;
+
+	case '4':
+		return 0.125;
+		break;
+	}
+
+}
+double convert(int x) {
+	double a = 0;
+	a = (x + 3.5)*(x - 5)*(x - 2.5)*(x - 8) / 240;
+	return a ;
+}
+double volumn(int i,double v) {
+	double t;
+	if (i < 4410) {
+		t = (90.0 / 180.0 * pi) / (4410.0-0) * (i);
+		return v * sin(t);
+	}
+	else if (i < 66150) {
+		t = (90.0 / 180.0 * pi) / (55100 - 4410.0) * (i - 4410.0);
+		return v * cos(t);
+	}
+	else {
+		t = (90.0 / 180.0 * pi) / (55100 - 4410.0) * (55100 - 4410.0);
+		return v * cos(t);
+	}
+}
+void start() {
+
+	fre = frequence();
+	Length = length() * 44100;
+	
+	for (int i = 0+L; i < Length+L; i++) {
+		signal[i] = 0;
+		for (int j = 1; j < 8; j++) {
+			signal[i] += volumn(i-v, Volumn) *convert(j) *(sin(2 * pi *fre *j *i / 44100));
+		}
+	}
+
+	L += Length;
+	v = int(L);
+}

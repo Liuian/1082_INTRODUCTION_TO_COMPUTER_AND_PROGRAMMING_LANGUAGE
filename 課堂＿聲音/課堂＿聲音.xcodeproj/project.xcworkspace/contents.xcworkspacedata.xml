@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../../../wave_file_s.h">
+   </FileRef>
+   <FileRef
+      location = "group:../../../wave_file.cpp">
+   </FileRef>
+   <FileRef
+      location = "self:&#x8ab2;&#x5802;&#xff3f;&#x8072;&#x97f3;.xcodeproj">
+   </FileRef>
+</Workspace>
