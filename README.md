@@ -7,3 +7,6 @@ Ans : 原因是在電腦的世界裡實際上是用二進制的方法來計算�
 <img width="428" alt="image" src="https://user-images.githubusercontent.com/70461575/133745899-d16831af-0cdd-475c-b684-c8bdb631e187.png">   
 更改版本：  
 <img width="389" alt="image" src="https://user-images.githubusercontent.com/70461575/133745148-6e25ffb1-8307-4d3c-88f5-97874becb6ec.png">
+  
+  未完待續...
+  
